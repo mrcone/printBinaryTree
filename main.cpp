@@ -4,39 +4,39 @@
 #include <cmath>
 using namespace std;
 
-class Nodo{
+class Node{
 public:
-	Nodo *Derecha;
-	Nodo *Izquierda;
-	int dato;
-	Nodo(int dat, Nodo *iz, Nodo *der){
-		this->dato=dat;
-		this->Izquierda=iz;
-		this->Derecha=der;
+	Node *Right;
+	Node *Left;
+	int data;
+	Node(int dat, Node *lft, Node *rght){
+		this->data=dat;
+		this->Left=lft;
+		this->Right=rght;
 	}
 };
 
-class Arbol{
+class Tree{
 public:
-	int tamanyo(Nodo *nodo) const {
-	    return (nodo == NULL)? 0 : tamanyo(nodo->Izquierda) + tamanyo(nodo->Derecha) + 1;
+	int sizeTree(Node *node) const {
+	    return (node == NULL)? 0 : sizeTree(node->Left) + sizeTree(node->Right) + 1;
 	}
 
-	void printArbol(Nodo *root, int factorAnchura=1){
-	    std::queue<Nodo *> colaNodos;
-	    int techo=log2(tamanyo(root)+1);
-	    colaNodos.push(root);
+	void printTree(Node *root, int factorHeight=1){
+	    std::queue<Node *> queueNode;
+	    int ceilSize=log2(sizeTree(root)+1);
+	    queueNode.push(root);
 	    int pot=0;
-	    while(colaNodos.size() > 0){
-	      int niveles = colaNodos.size();
-		      while(niveles > 0){
-		        Nodo *nodoAux = colaNodos.front(); 
-		        colaNodos.pop();
-		        cout <<setw( (niveles==pow(2,pot))?pow(2, (techo-pot+factorAnchura)):pow(2, (techo-pot+factorAnchura+1)));
-		        cout<< nodoAux->dato;
-		        if(nodoAux->Izquierda != NULL) colaNodos.push(nodoAux->Izquierda);
-		        if(nodoAux->Derecha != NULL) colaNodos.push(nodoAux->Derecha);
-		        niveles--;
+	    while(queueNode.size() > 0){
+	      int levels = queueNode.size();
+		      while(levels > 0){
+		        Node *nodeAux = queueNode.front(); 
+		        queueNode.pop();
+		        cout <<setw( (levels==pow(2,pot))?pow(2, (ceilSize-pot+factorHeight)):pow(2, (ceilSize-pot+factorHeight+1)));
+		        cout<< nodeAux->data;
+		        if(nodeAux->Left != NULL) queueNode.push(nodeAux->Left);
+		        if(nodeAux->Right != NULL) queueNode.push(nodeAux->Right);
+		        levels--;
 		      }
 		      pot++;
 		      cout << endl;
@@ -46,27 +46,27 @@ public:
 
 int
 main(int argc, char **argv){
-	Arbol *abb=new Arbol();
-	//Arbol izq
-	Nodo *nodo10=new Nodo(10, NULL, NULL);
-	Nodo *nodo30=new Nodo(30, NULL, NULL);
-	Nodo *nodo20=new Nodo(20, nodo10, nodo30);
-	Nodo *nodo39=new Nodo(39, NULL, NULL);
-	Nodo *nodo49=new Nodo(49, NULL, NULL);
-	Nodo *nodo45=new Nodo(45, nodo39, nodo49);
-	Nodo *nodo40=new Nodo(40, nodo20, nodo45);
+	Tree *abb=new Tree();
+	//Tree left
+	Node *node10=new Node(10, NULL, NULL);
+	Node *node30=new Node(30, NULL, NULL);
+	Node *node20=new Node(20, node10, node30);
+	Node *node39=new Node(39, NULL, NULL);
+	Node *node49=new Node(49, NULL, NULL);
+	Node *node45=new Node(45, node39, node49);
+	Node *node40=new Node(40, node20, node45);
 
-	//Arbol dcho
-	Nodo *nodo60=new Nodo(60, NULL, NULL);
-	Nodo *nodo69=new Nodo(69, NULL, NULL);
-	Nodo *nodo65=new Nodo(65, nodo60, nodo69);
-	Nodo *nodo80=new Nodo(80, NULL, NULL);
-	Nodo *nodo100=new Nodo(100, NULL, NULL);
-	Nodo *nodo90=new Nodo(90, nodo80, nodo100);
-	Nodo *nodo70=new Nodo(70, nodo65, nodo90);	
+	//Tree right
+	Node *node60=new Node(60, NULL, NULL);
+	Node *node69=new Node(69, NULL, NULL);
+	Node *node65=new Node(65, node60, node69);
+	Node *node80=new Node(80, NULL, NULL);
+	Node *node100=new Node(100, NULL, NULL);
+	Node *node90=new Node(90, node80, node100);
+	Node *node70=new Node(70, node65, node90);	
 
 	//Raiz
-	Nodo *nodo50=new Nodo(50, nodo40, nodo70);
+	Node *node50=new Node(50, node40, node70);
 
-	abb->printArbol(nodo50);
+	abb->printTree(node50);
 }
